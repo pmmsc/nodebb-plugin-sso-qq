@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-sso-qq",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "NodeBB Plugin that allows users to login/register via their qq account.",
   "main": "library.js",
   "repository": {
@@ -26,11 +26,9 @@
   "dependencies": {
     "passport-qq": "git://github.com/pmmsc/passport-qq.git#master"
   },
-  "gitHead": "f0ff4b08da4c32e8e6ca840105ecf7d5fd48be23",
   "homepage": "https://github.com/pmmsc/nodebb-plugin-sso-qq",
-  "_id": "nodebb-plugin-sso-qq@0.0.1",
+  "_id": "nodebb-plugin-sso-qq@0.0.2",
   "scripts": {},
-  "_shasum": "60922607369da4654225ae17bb8b0a9b7c3e19c4",
   "_from": "nodebb-plugin-sso-qq@",
   "_npmVersion": "1.4.16",
   "_npmUser": {
@@ -42,12 +40,5 @@
       "name": "pmmsc",
       "email": "yanni_wen@pmmsc.org"
     }
-  ],
-  "dist": {
-    "shasum": "60922607369da4654225ae17bb8b0a9b7c3e19c4",
-    "tarball": "http://registry.npmjs.org/nodebb-plugin-sso-qq/-/nodebb-plugin-sso-qq-0.0.1.tgz"
-  },
-  "directories": {},
-  "_resolved": "https://registry.npmjs.org/nodebb-plugin-sso-qq/-/nodebb-plugin-sso-qq-0.0.1.tgz",
-  "readme": "ERROR: No README data found!"
+  ]
 }
