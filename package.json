@@ -1,0 +1,46 @@
+{
+  "name": "nodebb-plugin-sso-qq",
+  "version": "0.0.1",
+  "description": "NodeBB Plugin that allows users to login/register via their qq account.",
+  "main": "library.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmmsc/nodebb-plugin-sso-qq"
+  },
+  "keywords": [
+    "nodebb",
+    "plugin",
+    "qq",
+    "sso",
+    "single sign on",
+    "registration"
+  ],
+  "author": {
+    "name": "pmmsc",
+    "email": "yanni_wen@pmmsc.org"
+  },
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/pmmsc/nodebb-plugin-sso-qq/issues"
+  },
+  "dependencies": {
+    "passport-qq": "git://github.com/pmmsc/passport-qq.git#master"
+  },
+  "gitHead": "6d83061a38d5006d6f0a61c20881b4a3da05f6c3",
+  "homepage": "https://github.com/pmmsc/nodebb-plugin-sso-qq",
+  "_id": "nodebb-plugin-sso-qq@0.0.1",
+  "scripts": {},
+  "_shasum": "bc92ff257ad3774e5c514fb0e3886d14e2bbf85d",
+  "_from": "nodebb-plugin-sso-qq@",
+  "_npmVersion": "1.4.16",
+  "_npmUser": {
+    "name": "pmmsc",
+    "email": "yanni_wen@pmmsc.org"
+  },
+  "maintainers": [
+    {
+      "name": "pmmsc",
+      "email": "yanni_wen@pmmsc.org"
+    }
+  ]
+}
