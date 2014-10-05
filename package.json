@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-sso-qq",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "NodeBB Plugin that allows users to login/register via their qq account.",
   "main": "library.js",
   "repository": {
@@ -24,10 +24,10 @@
     "url": "https://github.com/pmmsc/nodebb-plugin-sso-qq/issues"
   },
   "dependencies": {
-    "passport-qq": "git://github.com/pmmsc/passport-qq.git#master"
+    "passport-qq": "https://github.com/pmmsc/passport-qq.git#master"
   },
   "homepage": "https://github.com/pmmsc/nodebb-plugin-sso-qq",
-  "_id": "nodebb-plugin-sso-qq@0.0.2",
+  "_id": "nodebb-plugin-sso-qq@0.0.3",
   "scripts": {},
   "_from": "nodebb-plugin-sso-qq@",
   "_npmVersion": "1.4.16",
