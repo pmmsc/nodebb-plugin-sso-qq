@@ -39,9 +39,9 @@
                 if(profile._json.figureurl_qq_1){
                     picture = profile._json.figureurl_qq_1;
                 }
-                if(profile._json.figureurl_qq_2){
+                /*if(profile._json.figureurl_qq_2){
                     picture = profile._json.figureurl_qq_2;
-                }
+                }*/
                 QQ.login(profile.id, profile.nickname, email, picture, function(err, user) {
                     if (err) {
                         return done(err);
@@ -82,6 +82,9 @@
                 // New User
                 var success = function(uid) {
                     User.setUserField(uid, 'qqid', qqID);
+                    User.setUserField(uid, 'picture', picture);
+                    User.setUserField(uid, 'gravatarpicture', picture);
+                    User.setUserField(uid, 'uploadedpicture', picture);
                     db.setObjectField('qqid:openid', qqID, uid);
                     callback(null, {
                         uid: uid
