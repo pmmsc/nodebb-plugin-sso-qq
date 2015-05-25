@@ -25,5 +25,8 @@
   },
   "dependencies": {
     "passport-qq": "~0.0.3"
+  },
+  "nbbpm": {
+    "compatibility": ">=0.6.0 <=0.7.0"
   }
 }

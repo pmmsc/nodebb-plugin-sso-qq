@@ -13,7 +13,7 @@
         'name': "qq",
         'admin': {
             'icon': 'fa-qq',
-            'route': '/qq'
+            'route': '/plugins/qq'
         }
     });
 
@@ -26,11 +26,6 @@
                 clientSecret: meta.config['social:qq:secret'],
                 callbackURL: module.parent.require('nconf').get('url') + '/auth/qq/callback'
             },function(token, tokenSecret, profile, done) {
-
-                    console.log(token);
-                    console.log(tokenSecret);
-                    console.log(profile);
-
                 var email = ''
                 if(profile.emails && profile.emails.length){
                     email = profile.emails[0].value
@@ -129,12 +124,12 @@
     };
 
     function renderAdmin(req, res, callback) {
-        res.render('sso/qq/admin', {});
+        res.render('admin/plugins/qq/admin', {});
     }
 
    QQ.init = function(data, callback) {
-      	data.router.get('/admin/qq', data.middleware.admin.buildHeader, renderAdmin);
-      	data.router.get('/api/qq', renderAdmin);
+        data.router.get('/admin/plugins/qq', data.middleware.admin.buildHeader, renderAdmin);
+        data.router.get('/api/admin/plugins/qq', renderAdmin);
         callback();
     };
 
