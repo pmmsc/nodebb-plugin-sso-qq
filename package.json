@@ -1,7 +1,7 @@
 {
   "name": "nodebb-plugin-sso-qq",
-  "version": "0.0.8",
-  "description": "NodeBB Plugin that allows users to login/register via their qq account.",
+  "version": "0.1.0",
+  "description": "NodeBB Plugin that allows users to login/register via their QQ account.",
   "main": "library.js",
   "repository": {
     "type": "git",
@@ -19,6 +19,13 @@
     "name": "pmmsc",
     "email": "yanni_wen@pmmsc.org"
   },
+  "contributors": [
+    {
+      "name": "Eric Miao",
+      "email": "qjmiao@gmail.com",
+      "url": "https://github.com/qjmiao/nodebb-plugin-sso-qq"
+    }
+  ],
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/pmmsc/nodebb-plugin-sso-qq/issues"
