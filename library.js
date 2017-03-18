@@ -4,6 +4,7 @@
     var User = module.parent.require('./user'),
         db = module.parent.require('./database'),
         meta = module.parent.require('./meta'),
+        async = module.parent.require('async'),
         nconf = module.parent.require('nconf'),
         passport = module.parent.require('passport'),
         QQStrategy = require('passport-qq').Strategy;
@@ -57,7 +58,7 @@ var User = module.parent.require('./user'),
                     url: '/auth/qq',
                     callbackURL: '/auth/qq/callback',
                     icon: 'fa-qq',
-                    scope: 'user:info'
+                    scope: 'user:email'
                     
                 });
             }
