@@ -7,7 +7,25 @@
         nconf = module.parent.require('nconf'),
         passport = module.parent.require('passport'),
         QQStrategy = require('passport-qq').Strategy;
+/* QQ new
+var User = module.parent.require('./user'),
+		db = module.parent.require('./database'),
+		meta = module.parent.require('./meta'),
+		passport = module.parent.require('passport'),
+		nconf = module.parent.require('nconf'),
+		QQStrategy = require('passport-qq').Strategy;
+*/
+/*
+gihtub
+var User = module.parent.require('./user'),
+		db = module.parent.require('./database'),
+		meta = module.parent.require('./meta'),
+		nconf = module.parent.require('nconf'),
+		async = module.parent.require('async'),
+		passport = module.parent.require('passport'),
+		GithubStrategy = require('passport-github2').Strategy;
 
+*/
     var constants = Object.freeze({
         'name': "QQ",
         'admin': {
@@ -39,7 +57,8 @@
                     url: '/auth/qq',
                     callbackURL: '/auth/qq/callback',
                     icon: 'fa-qq',
-                    scope: 'get_user_info'
+                    scope: 'user:info'
+                    
                 });
             }
 
@@ -47,19 +66,21 @@
         });
     };
 
-    QQ.login = function(qqID, username, callback) {
-        var email = username + '@users.noreply.qq.com';
-
+    QQ.login = function(qqID, username,email, callback) {
+        //生成新用户
+        if(!email){
+            email = username + '@users.noreply.qq.com';
+        }    
         QQ.getUidByQQID(qqID, function(err, uid) {
             if (err) {
-                return callback(err);
-            }
+				return callback(err);
+			}
 
-            if (uid) {
-                // Existing User
-                callback(null, {
-                    uid: uid
-                });
+			if (uid) {
+				// Existing User
+				callback(null, {
+					uid: uid
+				});
             } else {
                 // New User
                 var success = function(uid) {
@@ -99,23 +120,38 @@
 
     QQ.addMenuItem = function(custom_header, callback) {
         custom_header.authentication.push({
-            "route": constants.admin.route,
-            "icon": constants.admin.icon,
-            "name": constants.name
-        });
+			"route": constants.admin.route,
+			"icon": constants.admin.icon,
+			"name": constants.name
+		});
 
-        callback(null, custom_header);
+		callback(null, custom_header);
     };
 
    QQ.init = function(data, callback) {
         function renderAdmin(req, res) {
-            res.render('admin/plugins/sso-qq', {});
+            res.render('admin/plugins/sso-qq', {
+                callbackURL: nconf.get('url') + '/auth/qq/callback'
+            });
         }
 
         data.router.get('/admin/plugins/sso-qq', data.middleware.admin.buildHeader, renderAdmin);
         data.router.get('/api/admin/plugins/sso-qq', renderAdmin);
 
         callback();
+        
+        /*
+        function renderAdmin(req, res) {
+			res.render('admin/plugins/sso-github', {
+				callbackURL: nconf.get('url') + '/auth/github/callback'
+			});
+		}
+
+		data.router.get('/admin/plugins/sso-github', data.middleware.admin.buildHeader, renderAdmin);
+		data.router.get('/api/admin/plugins/sso-github', renderAdmin);
+
+		callback();
+		*/
     };
 
     module.exports = QQ;

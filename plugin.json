@@ -1,19 +1,13 @@
 {
-    "id": "nodebb-plugin-sso-qq",
+    "id": "nodebb-plugin-sso-qq-fix",
     "name": "NodeBB QQ SSO",
     "description": "NodeBB Plugin that allows users to login/register via their QQ account.",
-    "url": "https://github.com/pmmsc/nodebb-plugin-sso-qq",
+    "url": "https://github.com/NodeBB-China/nodebb-plugin-sso-qq-fix",
     "library": "./library.js",
     "hooks": [
-        {
-            "hook": "filter:auth.init", "method": "getStrategy"
-        },
-        {
-            "hook": "filter:admin.header.build", "method": "addMenuItem"
-        },
-        {
-            "hook": "static:app.load", "method": "init"
-        }
+        {"hook": "static:app.load", "method": "init"},
+        {"hook": "filter:auth.init", "method": "getStrategy"},
+        {"hook": "filter:admin.header.build", "method": "addMenuItem"}
     ],
     "templates": "./templates"
 
