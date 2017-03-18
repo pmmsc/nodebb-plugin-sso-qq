@@ -9,6 +9,9 @@
         {"hook": "filter:auth.init", "method": "getStrategy"},
         {"hook": "filter:admin.header.build", "method": "addMenuItem"}
     ],
-    "templates": "./templates"
+    "templates": "./templates",
+    "acpScripts": [
+		"static/lib/admin.js"
+	]
 
 }

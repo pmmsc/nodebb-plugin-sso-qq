@@ -19,8 +19,8 @@
 			<div class="form-group alert alert-warning">
 				<label for="callback">你的 NodeBB 授权回调地址</label>
 				<input type="text" id="callback" title="Authorization callback URL" class="form-control" value="{callbackURL}" readonly />
-				<p class="help-block">
-					 你可以在你创建的QQ互联应用中找到以上的信息。
+				<p class="help-block" style="color:#fff">
+					 请将上面的地址填写在你的QQ互联应用中。
 				</p>
 			</div>
 		</form>
@@ -28,7 +28,7 @@
 </div>
 
 <button id="save" class="floating-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-	<i class="material-icons">保存</i>
+	<i class="material-icons">save</i>
 </button>
 
 <!--<div class="row">
