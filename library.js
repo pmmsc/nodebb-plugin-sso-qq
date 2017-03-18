@@ -69,7 +69,7 @@ var User = module.parent.require('./user'),
     
     
     QQ.getAssociation = function(data, callback) {
-		User.getUserField(data.uid, 'qqid', function(err, githubid) {
+		User.getUserField(data.uid, 'qqid', function(err, qqid) {
 			if (err) {
 				return callback(err, data);
 			}
