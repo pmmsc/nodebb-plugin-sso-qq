@@ -7,6 +7,8 @@
     "hooks": [
         {"hook": "static:app.load", "method": "init"},
         {"hook": "filter:auth.init", "method": "getStrategy"},
+        {"hook": "filter:auth.list", "method": "getAssociation" },
+        {"hook": "filter:user.delete", "method": "deleteUserData" },
         {"hook": "filter:admin.header.build", "method": "addMenuItem"}
     ],
     "templates": "./templates",

@@ -65,7 +65,32 @@ var User = module.parent.require('./user'),
             callback(null, strategies);
         });
     };
+    
+    
+    QQ.getAssociation = function(data, callback) {
+		User.getUserField(data.uid, 'qqid', function(err, githubid) {
+			if (err) {
+				return callback(err, data);
+			}
 
+			if (githubid) {
+				data.associations.push({
+					associated: true,
+					name: constants.name,
+					icon: constants.admin.icon
+				});
+			} else {
+				data.associations.push({
+					associated: false,
+					url: nconf.get('url') + '/auth/qq',
+					name: constants.name,
+					icon: constants.admin.icon
+				});
+			}
+
+			callback(null, data);
+		})
+	};
     QQ.login = function(qqID, username,email, callback) {
         //生成新用户
         if(!email){
@@ -153,6 +178,20 @@ var User = module.parent.require('./user'),
 		callback();
 		*/
     };
+    GitHub.deleteUserData = function(uid, callback) {
+		async.waterfall([
+			async.apply(User.getUserField, uid, 'qqid'),
+			function(oAuthIdToDelete, next) {
+				db.deleteObjectField('qqid:uid', oAuthIdToDelete, next);
+			}
+		], function(err) {
+			if (err) {
+				winston.error('[sso-qq] Could not remove OAuthId data for uid ' + uid + '. Error: ' + err);
+				return callback(err);
+			}
+			callback(null, uid);
+		});
+	};
 
     module.exports = QQ;
 }(module));
