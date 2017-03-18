@@ -7,7 +7,7 @@
 				
 			</p>
 		</div>
-		<form class="sso-github-settings">
+		<form class="sso-qq-settings">
 			<div class="form-group">
 				<label for="id">APP ID</label>
 				<input type="text" name="id" title="Client ID" class="form-control" placeholder="APP ID">
@@ -63,22 +63,23 @@
         </div>
     </div>
 </div>
-
+-->
+<!--
 <script>
 require(['settings'], function(Settings) {
     Settings.load('sso-qq', $('.sso-qq'));
 
     $('#save').on('click', function() {
-        Settings.save('sso-qq', $('.sso-qq'), function() {
-            app.alert({
-                type: 'success',
-                alert_id: 'qq-saved',
-                title: 'Settings Saved',
-                message: 'Please reload your NodeBB to apply these settings',
-                clickfn: function() {
-                    socket.emit('admin.reload');
-                }
-            });
+			Settings.save('sso-qq', $('.sso-qq-settings'), function() {
+				app.alert({
+					type: 'success',
+					alert_id: 'sso-qq-saved',
+					title: '配置已保存',
+					message: '请重载NodeBB以便使插件生效。',
+					clickfn: function() {
+						socket.emit('admin.reload');
+					}
+				});
         });
     });
 });

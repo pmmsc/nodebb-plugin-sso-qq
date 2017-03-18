@@ -74,7 +74,7 @@ var User = module.parent.require('./user'),
 				return callback(err, data);
 			}
 
-			if (githubid) {
+			if (qqid) {
 				data.associations.push({
 					associated: true,
 					name: constants.name,
@@ -179,7 +179,7 @@ var User = module.parent.require('./user'),
 		callback();
 		*/
     };
-    GitHub.deleteUserData = function(uid, callback) {
+    QQ.deleteUserData = function(uid, callback) {
 		async.waterfall([
 			async.apply(User.getUserField, uid, 'qqid'),
 			function(oAuthIdToDelete, next) {
