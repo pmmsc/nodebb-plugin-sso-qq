@@ -45,6 +45,11 @@ var User = module.parent.require('./user'),
                     clientSecret: settings.secret,
                     callbackURL: nconf.get('url') + '/auth/qq/callback'
                 }, function(token, tokenSecret, profile, done) {
+                    console.log(token);
+                    console.log(tokenSecret);
+                    console.log(profile);
+                    console.log("[SSO-QQ]profile.id:"+profile.id);
+                    console.log("[SSO-QQ]profile.nickname:"+profile.nickname)
                     QQ.login(profile.id, profile.nickname, function(err, user) {
                         if (err) {
                             return done(err);
@@ -58,7 +63,7 @@ var User = module.parent.require('./user'),
                     url: '/auth/qq',
                     callbackURL: '/auth/qq/callback',
                     icon: 'fa-qq',
-                    scope: 'user:email'
+                    scope: 'get_user_info'
                     
                 });
             }
@@ -92,21 +97,21 @@ var User = module.parent.require('./user'),
 			callback(null, data);
 		})
 	};
-    QQ.login = function(qqID, username,email, callback) {
-        //生成新用户
-        if(!email){
-            email = username + '@users.noreply.qq.com';
-        }    
+    QQ.login = function(qqID, username, callback) {
+        console.log("[SSO-QQ]Username:"+username);
+        console.log("[SSO-QQ]qqID:"+qqID);
+        var email = username + '@users.noreply.qq.com';
+
         QQ.getUidByQQID(qqID, function(err, uid) {
             if (err) {
-				return callback(err);
-			}
+                return callback(err);
+            }
 
-			if (uid) {
-				// Existing User
-				callback(null, {
-					uid: uid
-				});
+            if (uid) {
+                // Existing User
+                callback(null, {
+                    uid: uid
+                });
             } else {
                 // New User
                 var success = function(uid) {

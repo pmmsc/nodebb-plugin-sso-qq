@@ -23,6 +23,12 @@
 					 请将上面的地址填写在你的QQ互联应用中。
 				</p>
 			</div>
+			<div class="form-group alert alert-info" style="background-color:#66CCCC">
+				<p class="help-block" style="color:#fff"><b>目前版本存在崩溃BUG，请谨慎使用！</b></p>
+				<p class="help-block" style="color:#fff">
+					 如果使用碰到问题（崩溃，删除/添加用户错误），请到我们的<a href="https://github.com/NodeBB-China/nodebb-plugin-sso-qq-fix/issues">issue</a>中反馈!
+				</p>
+			</div>
 		</form>
 	</div>
 </div>
