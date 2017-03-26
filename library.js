@@ -121,14 +121,16 @@ var User = module.parent.require('./user'),
             if (err) {
                 return callback(err);
             }
-
+            console.log("[SSO-QQ]uid is:"+uid);
             if (uid) {
-                console.log(uid);
                 // Existing User
+                console.log("[SSO-QQ]User is Exist.Try to Bind.");
                 callback(null, {
                     uid: uid
                 });
             } else {
+                console.log("[SSO-QQ]User isn't Exist.Try to Creat a new account.");
+                console.log("[SSO-QQ]account username is ：" + username);
                 // New User
                 var success = function(uid) {
                     User.setUserField(uid, 'qqid', qqID);
@@ -137,33 +139,30 @@ var User = module.parent.require('./user'),
                         uid: uid
                     });
                 };
-
                 User.getUidByEmail(email, function(err, uid) {
-                    if (!uid) {
-                        User.create({username: username, email: email}, function(err, uid) {
-                            if (err !== null) {
-                                callback(err);
-                            } else {
-                                success(uid);
-                            }
-                        });
-                    } else {
-                        success(uid); // Existing account -- merge
-                    }
-                });
-            }
+					if (!uid) {
+					    
+						User.create(username, undefined, email, function(err, uid) {
+							if (err !== null) {
+								callback(err);
+							} else success(uid);
+						});
+					} else success(uid); // Existing account -- merge
+				});
+			}
+                
         });
     };
 
     QQ.getUidByQQID = function(qqID, callback) {
-        db.getObjectField('qqid:uid', qqID, function(err, uid) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(null, uid);
-            }
-        });
-    };
+		db.getObjectField('qqid:uid', qqID, function(err, uid) {
+			if (err) {
+				callback(err);
+			} else {
+				callback(null, uid);
+			}
+		});
+	};
 
     QQ.addMenuItem = function(custom_header, callback) {
         custom_header.authentication.push({

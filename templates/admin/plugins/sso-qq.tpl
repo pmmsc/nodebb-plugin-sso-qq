@@ -1,6 +1,13 @@
 <div class="row">
 	<div class="col-sm-2 col-xs-12 settings-header">QQ 单点登录</div>
 	<div class="col-sm-10 col-xs-12">
+		<div class="alert alert-info" style="background-color:#66CCCC">
+				<p class="help-block" style="color:#fff"><b>目前版本存在绑定BUG，并不是十分建议使用！</b></p>
+				<small class="help-block" style="color:#fff"><b>下版本将会使QQ头像直接代替本地头像(如果需要选择，请期待1.2)。</b></small>
+				<p class="help-block" style="color:#fff">
+					 如果使用碰到问题（崩溃，删除/添加用户错误），请到我们的<a href="https://github.com/NodeBB-China/nodebb-plugin-sso-qq-fix/issues">issue</a>中反馈!
+				</p>
+			</div>
 		<div class="alert alert-info">
 			<p>
 				注册 <strong> <a href="https://github.com/settings/developers">QQ互联</a></strong> ,然后把你的APP ID和APP Key复制到下面
@@ -23,12 +30,7 @@
 					 请将上面的地址填写在你的QQ互联应用中。
 				</p>
 			</div>
-			<div class="form-group alert alert-info" style="background-color:#66CCCC">
-				<p class="help-block" style="color:#fff"><b>目前版本存在崩溃BUG，请谨慎使用！</b></p>
-				<p class="help-block" style="color:#fff">
-					 如果使用碰到问题（崩溃，删除/添加用户错误），请到我们的<a href="https://github.com/NodeBB-China/nodebb-plugin-sso-qq-fix/issues">issue</a>中反馈!
-				</p>
-			</div>
+			
 		</form>
 	</div>
 </div>
