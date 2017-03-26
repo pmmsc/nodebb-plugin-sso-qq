@@ -7,7 +7,7 @@
         async = module.parent.require('async'),
         nconf = module.parent.require('nconf'),
         passport = module.parent.require('passport'),
-        QQStrategy = require('passport-qq').Strategy;
+        QQStrategy = require('passport-qq2015-fix').Strategy;
 /* QQ new
 var User = module.parent.require('./user'),
 		db = module.parent.require('./database'),
@@ -41,7 +41,7 @@ var User = module.parent.require('./user'),
         meta.settings.get('sso-qq', function(err, settings) {
             if (!err && settings['id'] && settings['secret']) {
                 console.log(settings);
-                passport.use(new QQStrategy({
+                passport.use('qq-token', new QQStrategy({
                     clientID: settings['id'],
                     clientSecret: settings['secret'],
                     callbackURL: nconf.get('url') + '/auth/qq/callback'
@@ -49,12 +49,20 @@ var User = module.parent.require('./user'),
                     console.log(accessToken);
                     console.log(refreshToken);
                     console.log(profile);
+                    profile = JSON.parse(profile);
                     console.log("[SSO-QQ]profile.id:"+profile.id);
                     
                     console.log("[SSO-QQ]profile.nickname:"+profile.nickname);
+                    
                     if (!profile) {
                             return done(null, false);
                         }else{
+                        
+                        if (profile.ret == -1){ // Try Catch Error
+                            console.log("[SSO-QQ]The Profile return code is -1,skipped.");
+                            return done(null,false);
+                        }
+                        
                         
                     QQ.login(profile.id, profile.nickname, function(err, user) {
                         if (err) {
@@ -66,7 +74,7 @@ var User = module.parent.require('./user'),
                 }));
 
                 strategies.push({
-                    name: 'qq',
+                    name: 'qq-token',
                     url: '/auth/qq',
                     callbackURL: '/auth/qq/callback',
                     icon: 'fa-qq',
@@ -115,6 +123,7 @@ var User = module.parent.require('./user'),
             }
 
             if (uid) {
+                console.log(uid);
                 // Existing User
                 callback(null, {
                     uid: uid
