@@ -39,23 +39,30 @@ var User = module.parent.require('./user'),
 
     QQ.getStrategy = function(strategies, callback) {
         meta.settings.get('sso-qq', function(err, settings) {
-            if (!err && settings.id && settings.secret) {
+            if (!err && settings['id'] && settings['secret']) {
+                console.log(settings);
                 passport.use(new QQStrategy({
-                    clientID: settings.id,
-                    clientSecret: settings.secret,
+                    clientID: settings['id'],
+                    clientSecret: settings['secret'],
                     callbackURL: nconf.get('url') + '/auth/qq/callback'
-                }, function(token, tokenSecret, profile, done) {
-                    console.log(token);
-                    console.log(tokenSecret);
+                }, function(accessToken, refreshToken, profile, done) {
+                    console.log(accessToken);
+                    console.log(refreshToken);
                     console.log(profile);
                     console.log("[SSO-QQ]profile.id:"+profile.id);
-                    console.log("[SSO-QQ]profile.nickname:"+profile.nickname)
+                    
+                    console.log("[SSO-QQ]profile.nickname:"+profile.nickname);
+                    if (!profile) {
+                            return done(null, false);
+                        }else{
+                        
                     QQ.login(profile.id, profile.nickname, function(err, user) {
                         if (err) {
                             return done(err);
                         }
                         done(null, user);
                     });
+                        }
                 }));
 
                 strategies.push({
