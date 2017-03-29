@@ -10,6 +10,8 @@
         QQStrategy = require('passport-qq2015-fix').Strategy,
         fs = module.parent.require('fs'),
 		path = module.parent.require('path');
+		
+	var authenticationController = module.parent.require('./controllers/authentication');
 /* QQ new
 var User = module.parent.require('./user'),
 		db = module.parent.require('./database'),
@@ -30,7 +32,7 @@ var User = module.parent.require('./user'),
 
 */
     var constants = Object.freeze({
-        'name': "QQ 社会化登陆",
+        'name': "QQ",
         'admin': {
             'icon': 'fa-qq',
             'route': '/plugins/sso-qq'
@@ -50,12 +52,15 @@ var User = module.parent.require('./user'),
                 passport.use('qq-token', new QQStrategy({
                     clientID: settings['id'],
                     clientSecret: settings['secret'],
-                    callbackURL: nconf.get('url') + '/auth/qq/callback'
-                }, function(accessToken, refreshToken, profile, done) {
+                    callbackURL: nconf.get('url') + '/auth/qq/callback',
+                    passReqToCallback: true
+                }, function(req,accessToken, refreshToken, profile, done) {
                     console.log("[SSO-QQ]accessToken:"+accessToken);
                     console.log("[SSO-QQ]refreshToken:"+refreshToken);
-                    console.log("[SSO-QQ]profile:")
+                    console.log("[SSO-QQ]profile:");
                     console.log(profile);
+                    console.log("[SSO-QQ]req:");
+                    console.log(req);
                     profile = JSON.parse(profile);
                     //console.log("[SSO-QQ]profile.id:"+profile.id);
                     
@@ -70,9 +75,7 @@ var User = module.parent.require('./user'),
                             return done(null,false);
                         }
                         
-                        var avatar;
-                        
-                        (profile.figureurl_qq_2 == null) ? avatar == profile.figureurl_qq_1 : avatar == profile.figureurl_qq_2; // Set avatar image
+                        profile.avatar = (profile.figureurl_qq_2 == null) ?  profile.figureurl_qq_1 : profile.figureurl_qq_2; // Set avatar image
                         
                         
                         //var users = QQ.getUser(); //Try get user
@@ -80,10 +83,21 @@ var User = module.parent.require('./user'),
                         
                         console.log("[SSO-QQ]Username:"+profile.nickname);
                         console.log("[SSO-QQ]qqID:"+profile.id);
-                        console.log("[SSO-QQ]avatar_url:"+avatar);
-                    QQ.login(profile.id, profile.nickname,avatar, function(err, user) { //3.29 add avatar
+                        console.log("[SSO-QQ]avatar_url:"+profile.avatar);
+                    
+                    if (req.hasOwnProperty('user') && req.user.hasOwnProperty('uid') && req.user.uid > 0) {
+						// Save qq-specific information to the user
+						console.log("[SSO-QQ]User is logged.Binding.");
+						console.log("[SSO-QQ]req.user:"+req.user);
+						User.setUserField(req.user.uid, 'qqid', profile.id);
+						db.setObjectField('qqid:uid', profile.id, req.user.uid);
+						return done(null,req.user);
+					}
+                    
+                    
+                    QQ.login(profile.id,profile.nickname,profile.avatar, function(err, user) { //3.29 add avatar
                         if (err) {
-                            done(err);
+                           return done(err);
                         }
                         authenticationController.onSuccessfulLogin(req, user.uid);
 						done(null, user);
@@ -132,17 +146,17 @@ var User = module.parent.require('./user'),
 			callback(null, data);
 		})
 	};
-    QQ.login = function(qqID, handle ,callback) {
+    QQ.login = function(qqID, username,avatar ,callback) {
         QQ.getUidByQQID(qqID, function(err, uid) {
             if (err) {
                 return callback(err);
             }
             
-            console.log("[SSO-QQ]uid is:"+uid);
+            console.log("[SSO-QQ]uid:"+uid);
             if (uid !== null) {
                 // Existing User
                 console.log("[SSO-QQ]User is Exist.Try to Bind.");
-                callback(null, {
+                return callback(null, {
                     uid: uid
                 });
             } else {
@@ -171,21 +185,21 @@ var User = module.parent.require('./user'),
 				
 				// New User 
 				//From SSO-Twitter
-				user.create({username: handle}, function (err, uid) {
+				User.create({username: username}, function (err, uid) {
 					if (err) {
 						return callback(err);
 					}
 
 					// Save qq-specific information to the user
-					user.setUserField(uid, 'qqid', twid);
-					db.setObjectField('qqid:uid', twid, uid);
+					User.setUserField(uid, 'qqid', qqID);
+					db.setObjectField('qqid:uid', qqID, uid);
 					
 					// Save their photo, if present
 					if (avatar && avatar.length > 0) {
 						var photoUrl = avatar[0].value;
 						photoUrl = path.dirname(photoUrl) + '/' + path.basename(photoUrl, path.extname(photoUrl)).slice(0, -6) + 'bigger' + path.extname(photoUrl);
-						user.setUserField(uid, 'uploadedpicture', photoUrl);
-						user.setUserField(uid, 'picture', photoUrl);
+						User.setUserField(uid, 'uploadedpicture', photoUrl);
+						User.setUserField(uid, 'picture', photoUrl);
 					}
 
 					callback(null, {
@@ -212,7 +226,7 @@ var User = module.parent.require('./user'),
         custom_header.authentication.push({
 			"route": constants.admin.route,
 			"icon": constants.admin.icon,
-			"name": constants.name
+			"name": "QQ 社会化登陆"
 		});
 
 		callback(null, custom_header);
@@ -245,7 +259,7 @@ var User = module.parent.require('./user'),
     };
     QQ.deleteUserData = function (uid, callback) {
 		async.waterfall([
-			async.apply(user.getUserField, uid, 'qqid'),
+			async.apply(User.getUserField, uid, 'qqid'),
 			function (oAuthIdToDelete, next) {
 				db.deleteObjectField('qqid:uid', oAuthIdToDelete, next);
 			}
