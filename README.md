@@ -2,7 +2,7 @@
 
 可以让你通过 QQ账户 登陆/注册 的NodeBB插件
 
->目前版本存在无法绑定用户的问题(由于腾讯API问题，我们只能新建用户)，这个错误会NodeBB官方回复后修复。
+> 通过 SSO-Twitter 插件解决了绑定问题。
 
 ## 安装
 ```
@@ -16,3 +16,4 @@
 > `nodebb-plugin-sso-gihtub`  
 > `nodebb-plugin-sso-qq`  
 > `nodebb-plugin-sso-qq-new`  
+> `nodebb-plugin-sso-twitter`
