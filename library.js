@@ -39,10 +39,10 @@
                     callbackURL: nconf.get('url') + '/auth/qq/callback',
                     passReqToCallback: true
                 }, function(req,accessToken, refreshToken, profile, done) {
-                    console.log("[SSO-QQ]accessToken:"+accessToken);
-                    console.log("[SSO-QQ]refreshToken:"+refreshToken);
-                    console.log("[SSO-QQ]profile:");
-                    console.log(profile);
+                    //console.log("[SSO-QQ]accessToken:"+accessToken);
+                    //console.log("[SSO-QQ]refreshToken:"+refreshToken);
+                    //console.log("[SSO-QQ]profile:");
+                    //console.log(profile);
                     //console.log("[SSO-QQ]req:");
                     //console.log(req);
                     profile = JSON.parse(profile);
@@ -157,7 +157,7 @@
 					// Save their photo, if present
 					if (avatar && avatar.length > 0) {
 						var photoUrl = avatar[0].value;
-						photoUrl = path.dirname(photoUrl) + '/' + path.basename(photoUrl, path.extname(photoUrl)).slice(0, -6) + 'bigger' + path.extname(photoUrl);
+						//photoUrl = path.dirname(photoUrl) + '/' + path.basename(photoUrl, path.extname(photoUrl)).slice(0, -6) + 'bigger' + path.extname(photoUrl);
 						User.setUserField(uid, 'uploadedpicture', photoUrl);
 						User.setUserField(uid, 'picture', photoUrl);
 					}
