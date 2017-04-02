@@ -2,8 +2,10 @@
 
 可以让你通过 QQ账户 登陆/注册 的NodeBB插件
 
-> 通过 SSO-Twitter 插件解决了绑定问题。
+> 已经修复了绑定错误
 
+-----
+目前的稳定版本号:`1.3.0,1.0.1`
 ## 安装
 ```
     npm install nodebb-plugin-sso-qq-fix
