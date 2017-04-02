@@ -5,7 +5,7 @@
 				<!--<p class="help-block" style="color:#fff"><b>本版本为测试版本，并不是十分建议使用！</b></p>-->
 				<!--<small class="help-block" style="color:#fff">测试版本可能遇到崩溃等问题，请使用 npm i nodebb-plugin-sso-qq-fix@1.0.1 来获取到最近的稳定版本</b></small>-->
 				<p class="help-block" style="color:#fff">
-					 如果使用碰到问题（崩溃，删除/添加用户错误），请到我们的<a href="https://github.com/NodeBB-China/nodebb-plugin-sso-qq-fix/issues">issue</a>中反馈!
+					 如果使用碰到问题（崩溃，删除/添加用户错误），请到我们的 <a href="https://github.com/NodeBB-China/nodebb-plugin-sso-qq-fix/issues">issue</a> 中反馈!
 				</p>
 			</div>
 		<div class="alert alert-info">

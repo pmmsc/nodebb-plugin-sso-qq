@@ -23,6 +23,56 @@
         }
     });
 
+    /**
+     * 转半角字符
+     */
+    function toSBC(str){
+        var result = "";
+        var len = str.length;
+        for(var i=0;i<len;i++)
+        {
+            var cCode = str.charCodeAt(i);
+            //全角与半角相差（除空格外）：65248（十进制）
+            cCode = (cCode>=0xFF01 && cCode<=0xFF5E)?(cCode - 65248) : cCode;
+            //处理空格
+            cCode = (cCode==0x03000)?0x0020:cCode;
+            result += String.fromCharCode(cCode);
+        }
+        return result;
+    }
+    
+    /**
+    *  中文符号转英文符号
+    */
+    function zhtoEN(s){
+        s=s.replace(/：/g,':');  
+        s=s.replace(/。/g,'.');  
+        s=s.replace(/“/g,'"');  
+        s=s.replace(/”/g,'"');  
+        s=s.replace(/【/g,'[');  
+        s=s.replace(/】/g,']');  
+        s=s.replace(/《/g,'<');  
+        s=s.replace(/》/g,'>');  
+        s=s.replace(/，/g,',');  
+        s=s.replace(/？/g,'?');  
+        s=s.replace(/、/g,',');  
+        s=s.replace(/；/g,';');  
+        s=s.replace(/（/g,'(');  
+        s=s.replace(/）/g,')');  
+        s=s.replace(/‘/g,"'");  
+        s=s.replace(/’/g,"'");  
+        s=s.replace(/『/g,"[");  
+        s=s.replace(/』/g,"]");  
+        s=s.replace(/「/g,"[");  
+        s=s.replace(/」/g,"]");  
+        s=s.replace(/﹃/g,"[");  
+        s=s.replace(/﹄/g,"]");  
+        s=s.replace(/〔/g,"{");  
+        s=s.replace(/〕/g,"}");  
+        s=s.replace(/—/g,"-");  
+        s=s.replace(/·/g,".");  
+        return s;
+    }
     var QQ = {};//初始化对象
 
     //配置好QQ的passport验证器
@@ -144,6 +194,20 @@
                 console.log("[SSO-QQ]User isn't Exist.Try to Creat a new account.");
                 console.log("[SSO-QQ]New Account's Username：" + username);
 				// New User 
+				
+				/**
+				 * 转义Username
+				 */
+				    //中文符号到英文
+				    username = zhtoEN(username);
+				    //全角转半角
+				    username = toSBC(username);
+				    // 去掉转义字符  
+				    username = username.replace(/[\'\"\\\/\b\f\n\r\t]/g, '');
+				    //去除特殊符号
+				    username = username.replace(/[\@\#\$\%\^\&\*\{\}\:\"\L\?]/,"");
+				//End
+				
 				//From SSO-Twitter
 				User.create({username: username}, function (err, uid) {
 					if (err) {
